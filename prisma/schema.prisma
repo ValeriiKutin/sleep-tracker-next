@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/**
+ * Це модель(таблиця) юзера
+ */
+model User {
+  id           String   @id @default(uuid()) // це внутрішній унікальний ID для бази
+  clerckUserId String   @unique // id від системи авторизації юзера через Clerk
+  email        String   @unique // email користувача
+  name         String? // name - це звичайно ім'я користувача
+  imageUrl     String? // imageUrl - це звичайно юрл картинки користувача
+  createdAt    DateTime @default(now()) // тут зберігається коли створений користувач now()
+  updatedAt    DateTime @updatedAt // зберігається дата коли оновлено користувача
+  Records      Record[] // Масив записів сну, саме той що належить цьому користувачу
+}
+
+/**
+ * Це модель(таблиця) записів сну юзера
+ */
+model Record {
+  id        String   @id @default(uuid()) // унікальний ID кожного запису
+  text      String // текст запису
+  amount    Float // кількість годин сну
+  date      DateTime @default(now()) // дата сну, по дефолту буде підставлятись сьогоднішня
+  userId    String // userId посилається на clerckUserId і тут буде саме значення clerckUserId, що буде зв'язувати запис і юзера
+  user      User     @relation(fields: [userId], references: [clerckUserId], onDelete: Cascade) /* тобто коли в userId стоїть abcd123, це належить користувачу з clerckUserId = abcd123 
+  onDelete: Cascade - це означає, якщо видалити користувача, усі його записи сну теж автоматично вадаляються
+  */
+  createdAt DateTime @default(now())
+
+  @@index([userId]) /* це покращувач швидкості */
+}
+
+/**
+ * npm install prisma -D
+ * npm install @prisma/client
+ * npx prisma generate
+ * npx prisma migrate dev
+ */
+
+/**
+ * Neon - це віддалена PostgreSQL база даних
+ * Prisma - це інструмент, який працює з БД
+ */
+/**
+ * Поясненні покрокове, що відбувається:
+ * 1) Через vercel створив в neon проєкт, який створив реальну PostgreSQL базу даних
+ * 2) далі в проєкті я зробив "npx prisma init":
+ * - ініціювали prisma в проєкті, і ця команда створила потрібні файли щоб працювати з БД
+ * - prisma/schema.prisma
+ * schema.prisma - це не база даних, це не таблиці, це просто опис де я описую, які таблиці(model) будуть в БД
+ * 3) потім я ввів "npx prisma migrate dev" відбулось ось це:
+ * - Prisma подививя на файл schema.prisma
+ * - по моєму опису в цьому файлі створив реальні SQL команди
+ * - відправив їх у Neon
+ * - Neon створив таблиці
+ * - Prisma зберіг це в prisma/migrations
+ * 4) db.ts
+ */
