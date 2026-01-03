@@ -1,6 +1,12 @@
+import Guest from "@/components/Guest";
+import { currentUser } from "@clerk/nextjs/server";
 
-export default function Home() {
-  console.log(process.env.DATABASE_URL);
+export default async function Home() {
+  const user = await currentUser();
+  if (!user) {
+    return <Guest />;
+  }
+
   return (
     <div>Homeawdawd</div>
   );
