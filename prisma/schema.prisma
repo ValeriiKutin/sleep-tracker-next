@@ -46,8 +46,10 @@ model Record {
 /**
  * npm install prisma -D
  * npm install @prisma/client
+ * npx prisma init
  * npx prisma generate
  * npx prisma migrate dev
+ * npm i @prisma/adapter-pg
  */
 
 /**
