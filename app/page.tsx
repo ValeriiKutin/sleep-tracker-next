@@ -1,11 +1,14 @@
+"use server"
 import AddNewRecord from "@/components/AddNewRecord";
 import Guest from "@/components/Guest";
+import HistorySleepCard from "@/components/History/HistorySleepCard";
+import { getRecords } from "@/lib/actions/getRecords";
 import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 
 export default async function Home() {
   const user = await currentUser();
-  console.log(user);
+  const dataCurrentUser = await getRecords();
 
   if (!user) {
     return <Guest />;
@@ -49,6 +52,7 @@ export default async function Home() {
           <AddNewRecord />
         </div>
       </div>
+      <HistorySleepCard records={dataCurrentUser} />
     </main>
   );
 }

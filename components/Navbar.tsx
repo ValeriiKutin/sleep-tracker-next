@@ -4,12 +4,9 @@ import Link from 'next/link'
 import React from 'react'
 
 const Navbar = async () => {
-    const user = await checkUser();
-    console.log("newUser: ", user);
-
     return (
         <nav>
-            <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b-2 border-gray-200'>
+            <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-gray-200'>
                 <div className='flex items-center justify-between h-16'>
                     <div className='flex items-center'>
                         <Link href='/' className='flex-shrink-0'>
@@ -22,14 +19,14 @@ const Navbar = async () => {
                     <div className='flex items-center space-x-4'>
                         <Link
                             href='/'
-                            className='text-gray-700 hover:text-purple-600 px-2 py-1 rounded-md text-sm sm:px-3 sm:py-2 sm:text-base font-medium hidden sm:block'
+                            className='text-gray-700 hover:text-purple-600 px-2 py-1 rounded-md text-sm sm:px-3 sm:py-2 sm:text-base font-medium hidden sm:block text-white'
                         >
                             Home
                         </Link>
 
                         <Link
                             href='/about'
-                            className='text-gray-700 hover:text-purple-600 px-2 py-1 rounded-md text-sm sm:px-3 sm:py-2 sm:text-base font-medium '
+                            className='text-gray-700 hover:text-purple-600 px-2 py-1 rounded-md text-sm sm:px-3 sm:py-2 sm:text-base font-medium text-white'
                         >
                             About
                         </Link>

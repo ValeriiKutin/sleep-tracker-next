@@ -3,7 +3,6 @@ import { db } from "./db";
 
 export const checkUser = async () => {
     const user = await currentUser(); // отримуємо поточного авторизованого юзера з clerk
-    console.log("user: ", user);
 
     if (!user) {// якщо юзера немає то повертаємо null
         return null;

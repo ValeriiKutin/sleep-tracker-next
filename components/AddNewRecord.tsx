@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import FormSleepRecords from './FormSleepRecords';
+import FormSleepRecords from './History/FormSleepRecords';
 
 const AddNewRecord = () => {
     return (
