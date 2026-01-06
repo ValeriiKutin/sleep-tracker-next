@@ -2,20 +2,23 @@
 import AddNewRecord from "@/components/AddNewRecord";
 import Guest from "@/components/Guest";
 import HistorySleepCard from "@/components/History/HistorySleepCard";
+import SleepChart from "@/components/Chart/SleepChart";
 import { getRecords } from "@/lib/actions/getRecords";
 import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
+import AvgSleep from "@/components/AvgSleep";
 
 export default async function Home() {
   const user = await currentUser();
-  const dataCurrentUser = await getRecords();
+  const allUserRecords = await getRecords();
+  // console.log(allUserRecords);
 
   if (!user) {
     return <Guest />;
   }
 
   return (
-    <main className="bg-gray-100 text-gray-800 font-sans min-h-screen">
+    <main className="bg-gray-100 text-gray-800 font-sans min-h-screen py-14">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-6">
           <div className="bg-white p-6 rounded-lg shadow-md flex flex-col sm:flex-row items-center sm:items-start gap-6">
@@ -51,8 +54,12 @@ export default async function Home() {
           </div>
           <AddNewRecord />
         </div>
+        <div>
+          <SleepChart />
+          <AvgSleep />
+        </div>
       </div>
-      <HistorySleepCard records={dataCurrentUser} />
+      <HistorySleepCard records={allUserRecords} />
     </main>
   );
 }
