@@ -11,7 +11,6 @@ import AvgSleep from "@/components/AvgSleep";
 export default async function Home() {
   const user = await currentUser();
   const allUserRecords = await getRecords();
-  // console.log(allUserRecords);
 
   if (!user) {
     return <Guest />;
